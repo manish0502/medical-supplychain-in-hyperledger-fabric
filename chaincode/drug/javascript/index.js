@@ -1,4 +1,4 @@
 'use strict';
-const Certificate = require('./certificatemanagement');
-module.exports.Order = Certificate
-module.exports.contracts = [ Certificate ];
+const Drugchain = require('./drugsupplychain');
+module.exports.Order = Drugchain
+module.exports.contracts = [ Drugchain ];

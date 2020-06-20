@@ -2,7 +2,7 @@
 
 const { Contract } = require("fabric-contract-api");
 
-class Certificate extends Contract {
+class Drugchain extends Contract {
     async init(ctx){
         console.info("Chaincode Instantiated");
     }
@@ -23,6 +23,7 @@ class Certificate extends Contract {
         vehicleNo
     ) {
         let package = {
+            batchNo,
             productName,
             productType,
             quantity,
@@ -32,16 +33,14 @@ class Certificate extends Contract {
             sellerGST,
             buyerName,
             buyerGST,
-            batchNo,
             transpoterName,
             vehicleNo,
-            owner: "",
+            owner: "manufacture",
             paymentDate: new Date().getFullYear(),
             status: "created",
             updatedBy: "manufacture",
             payment: false
         };
-
         try {
             await ctx.stub.putState(
                 package.batchNo,
@@ -56,38 +55,38 @@ class Certificate extends Contract {
         }
     }
 
-    async updatePackage(ctx, batchNo,sellerName,sellerGST,buyerName,buyerGST,temperature,humiduty,transpoterName,vehicleNo) {
-        try {
-            const packageAsBytes = await ctx.stub.getState(batchNo); // get the car from chaincode state
-            if (!packageAsBytes || packageAsBytes.length === 0) {
-                throw new Error(`${batchNo} does not exist`);
-            }
-            let package = JSON.parse(packageAsBytes.toString());
-            package.status = "shipment in progress";
-            package.sellerName=sellerName;
-            package.sellerGST=sellerGST;
-            package.buyerName=buyerName;
-            package.buyerGST=buyerGST;
-            package.temperature=temperature;
-            package.humiduty=humiduty;
-            package.transpoterName=transpoterName;
-            package.vehicleNo=vehicleNo;
-            try {
-                await ctx.stub.putState(
-                    package.batchNo,
-                    Buffer.from(JSON.stringify(package))
-                );
-                return(JSON.stringify({response:"The package data is updated successfully!!!"}));
-            } catch (error) {
-                throw new Error(
-                    "package data is not updated this the error faced in creating: " +
-                        error
-                );
-            }
-        } catch (error) {
-            throw new Error(`Some error has occured ${error}`);
-        }
-    }
+    // async updatePackage(ctx, batchNo, sellerName, sellerGST, buyerName, buyerGST, temperature, humiduty, transpoterName, vehicleNo) {
+    //     try {
+    //         const packageAsBytes = await ctx.stub.getState(batchNo);
+    //         if (!packageAsBytes || packageAsBytes.length === 0) {
+    //             throw new Error(`package with ${batchNo} does not exist`);
+    //         }
+    //         let package = JSON.parse(packageAsBytes.toString());
+    //         package.status = "shipment in progress";
+    //         package.sellerName = sellerName;
+    //         package.sellerGST = sellerGST;
+    //         package.buyerName = buyerName;
+    //         package.buyerGST = buyerGST;
+    //         package.temperature = temperature;
+    //         package.humiduty = humiduty;
+    //         package.transpoterName = transpoterName;
+    //         package.vehicleNo = vehicleNo;
+    //         try {
+    //             await ctx.stub.putState(
+    //                 package.batchNo,
+    //                 Buffer.from(JSON.stringify(package))
+    //             );
+    //             return(JSON.stringify({response:"The package data is updated successfully!!!"}));
+    //         } catch (error) {
+    //             throw new Error(
+    //                 "package data is not updated this the error faced in creating: " +
+    //                     error
+    //             );
+    //         }
+    //     } catch (error) {
+    //         throw new Error(`Some error has occured ${error}`);
+    //     }
+    // }
 
 
     // async viewCertificate(ctx, querystring) {
@@ -114,4 +113,4 @@ class Certificate extends Contract {
 
 }
 
-module.exports = Certificate;
+module.exports = Drugchain;
