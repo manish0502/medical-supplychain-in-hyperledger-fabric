@@ -1,0 +1,181 @@
+Organizations:
+    - &OrdererOrg
+        Name: OrdererMSP
+        ID: OrdererMSP
+        MSPDir: crypto-config/ordererOrganizations/hackerthon.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Writers:
+                Type: Signature
+                Rule: "OR('OrdererMSP.member')"
+            Admins:
+                Type: Signature
+                Rule: "OR('OrdererMSP.admin')"
+    - &Org1
+        Name: manufacturerMSP
+        ID: manufacturerMSP
+        MSPDir: crypto-config/peerOrganizations/manufacturer.hackerthon.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('manufacturerMSP.admin', 'manufacturerMSP.peer', 'manufacturerMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('manufacturerMSP.admin', 'manufacturerMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('manufacturerMSP.admin')"
+        AnchorPeers:
+            - Host: peer0.manufacturer.hackerthon.com
+              Port: 7051
+    - &Org2
+        Name: distributorMSP
+        ID: distributorMSP
+        MSPDir: crypto-config/peerOrganizations/distributor.hackerthon.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('distributorMSP.admin', 'distributorMSP.peer', 'distributorMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('distributorMSP.admin', 'distributorMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('distributorMSP.admin')"
+        AnchorPeers:
+            - Host: peer0.distributor.hackerthon.com
+              Port: 9051
+    - &Org3
+        Name: retailerMSP
+        ID: retailerMSP
+        MSPDir: crypto-config/peerOrganizations/retailer.hackerthon.com/msp
+        Policies:
+            Readers:
+                Type: Signature
+                Rule: "OR('retailerMSP.admin', 'retailerMSP.peer', 'retailerMSP.client')"
+            Writers:
+                Type: Signature
+                Rule: "OR('retailerMSP.admin', 'retailerMSP.client')"
+            Admins:
+                Type: Signature
+                Rule: "OR('retailerMSP.admin')"
+        AnchorPeers:
+            - Host: peer0.retailer.hackerthon.com
+              Port: 11051
+Capabilities:
+    Channel: &ChannelCapabilities
+        V1_4_3: true
+        V1_3: false
+        V1_1: false
+    Orderer: &OrdererCapabilities
+        V1_4_2: true
+        V1_1: false
+    Application: &ApplicationCapabilities
+        V1_4_2: true
+        V1_3: false
+        V1_2: false
+        V1_1: false
+Application: &ApplicationDefaults
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ApplicationCapabilities
+Orderer: &OrdererDefaults
+    OrdererType: etcdraft
+    Addresses:
+        - orderer0.hackerthon.com:7050
+        - orderer1.hackerthon.com:7050
+        - orderer2.hackerthon.com:7050
+        - orderer3.hackerthon.com:7050
+        - orderer4.hackerthon.com:7050
+    BatchTimeout: 2s
+    BatchSize:
+        MaxMessageCount: 10
+        AbsoluteMaxBytes: 99 MB
+        PreferredMaxBytes: 512 KB
+    EtcdRaft:
+        Consenters:
+        - Host: orderer0.hackerthon.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer0.hackerthon.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer0.hackerthon.com/tls/server.crt
+        - Host: orderer1.hackerthon.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer1.hackerthon.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer1.hackerthon.com/tls/server.crt
+        - Host: orderer2.hackerthon.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer2.hackerthon.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer2.hackerthon.com/tls/server.crt
+        - Host: orderer3.hackerthon.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer3.hackerthon.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer3.hackerthon.com/tls/server.crt
+        - Host: orderer4.hackerthon.com
+          Port: 7050
+          ClientTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer4.hackerthon.com/tls/server.crt
+          ServerTLSCert: crypto-config/ordererOrganizations/hackerthon.com/orderers/orderer4.hackerthon.com/tls/server.crt
+    Organizations:
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+        BlockValidation:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+Channel: &ChannelDefaults
+    Policies:
+        Readers:
+            Type: ImplicitMeta
+            Rule: "ANY Readers"
+        Writers:
+            Type: ImplicitMeta
+            Rule: "ANY Writers"
+        Admins:
+            Type: ImplicitMeta
+            Rule: "MAJORITY Admins"
+    Capabilities:
+        <<: *ChannelCapabilities
+Profiles:
+    hackerthonGenesis:
+        <<: *ChannelDefaults
+        Orderer:
+            <<: *OrdererDefaults
+            Organizations:
+                - *OrdererOrg
+            Capabilities:
+                <<: *OrdererCapabilities
+        Consortiums:
+            SampleConsortium:
+                Organizations:
+                    - *Org1
+                    - *Org2
+                    - *Org3
+    CV_Channel:
+        Consortium: SampleConsortium
+        <<: *ChannelDefaults
+        Application:
+            <<: *ApplicationDefaults
+            Organizations:
+                - *Org1
+                - *Org2
+                - *Org3
+            Capabilities:
+                <<: *ApplicationCapabilities

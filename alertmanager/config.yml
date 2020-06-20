@@ -1,0 +1,47 @@
+global:
+  smtp_smarthost: 'smtp.gmail.com:587'
+  smtp_from: 'chainlinkspassport@gmail.com'
+  smtp_auth_username: 'chainlinkspassport@gmail.com'
+  smtp_auth_password: 'qnvwdfaoktnlxzny'
+
+templates: 
+- '/etc/alertmanager/template/*.tmpl'
+
+route:
+  group_by: ['alertname', 'cluster', 'service']
+
+  group_wait: 30s
+  group_interval: 5m
+  repeat_interval: 3h 
+  receiver: team-X-mails
+
+  routes:
+  - match_re:
+      alertname: 'HostOutOfDiskSpace'
+    receiver: team-X-mails
+    routes:
+    - match:
+        severity: critical
+      receiver: team-X-mails
+
+# Inhibition rules allow to mute a set of alerts given that another alert is
+# firing.
+# We use this to mute any warning-level notifications if the same alert is 
+# already critical.
+inhibit_rules:
+- source_match:
+    severity: 'critical'
+  target_match:
+    severity: 'warning'
+  # Apply inhibition if the alertname is the same.
+  # CAUTION: 
+  #   If all label names listed in `equal` are missing 
+  #   from both the source and target alerts,
+  #   the inhibition rule will apply!
+  equal: ['alertname', 'cluster', 'service']
+
+
+receivers:
+- name: 'team-X-mails'
+  email_configs:
+  - to: 'vishnupradeepmahe@gmail.com'

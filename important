@@ -1,0 +1,61 @@
+./bin/configtxgen -profile <profile_name> -channelID orderermanagement-channel -outputBlock ./channel-artifacts/genesis.block
+./bin/configtxgen -profile certificateOrdererGenesis -channelID klm-channel -outputBlock ./channel-artifacts/genesis.block
+./bin/configtxgen -profile hackerthonGenesis -channelID hackerthon -outputBlock ./channel-artifacts/genesis.block
+
+channels
+./bin/configtxgen -profile <Channel_name> -outputCreateChannelTx ./channel-artifacts/<channel-name.tx> -channelID <channel_id>
+./bin/configtxgen -profile klmchannel -outputCreateChannelTx ./channel-artifacts/klmchannel.tx -channelID SampleConsortium
+./bin/configtxgen -profile klmchannel -outputCreateChannelTx ./channel-artifacts/klmchannel.tx -channelID klm-channel
+./bin/configtxgen -profile CV_Channel -outputCreateChannelTx ./channel-artifacts/CV_Channel.tx -channelID hackerthon
+
+
+
+Anchors
+
+ex - ./bin/configtxgen -profile <channel_name> -outputAnchorPeersUpdate ./channel-artifacts/<orgname>MSP_<Channelname>anchors.tx> -channelID <channel_id> -asOrg AudiMSP
+
+    ./bin/configtxgen -profile klmchannel -outputAnchorPeersUpdate ./channel-artifacts/keralakalamandalamorgMSP_klmChannelanchors.tx -channelID klmchannel -asOrg keralakalamandalamorgMSP
+    ./bin/configtxgen -profile klmchannel -outputAnchorPeersUpdate ./channel-artifacts/studentorgMSP_klmChannelanchors.tx -channelID klmchannel -asOrg studentorgMSP
+    ./bin/configtxgen -profile klmchannel -outputAnchorPeersUpdate ./channel-artifacts/verifierorgMSP_klmChannelanchors.tx -channelID klmchannel -asOrg verifierorgMSP
+./bin/configtxgen -profile klmchannel -outputAnchorPeersUpdate ./channel-artifacts/verifierorgMSP_klmChannelanchors.tx -channelID klmchannel -asOrg verifierorgMSP
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ex - ./bin/configtxgen -profile <profile_name> -channelID orderermanagement-channel -outputBlock ./channel-artifacts/genesis.block
+
+    ./bin/configtxgen -profile klmGenesis -channelID klm-channel -outputBlock ./channel-artifacts/genesis.block
+
+        ./bin/configtxgen -profile certificateOrdererGenesis -channelID klm-channel -outputBlock ./channel-artifacts/genesis.block
+
+
+ex - ./bin/configtxgen -profile <Channel_name> -outputCreateChannelTx ./channel-artifacts/<channel-name.tx> -channelID <channel_id>
+
+    ./bin/configtxgen -profile certificatechannel -outputCreateChannelTx ./channel-artifacts/certificatechannel.tx -channelID certificatechannel
+./bin/configtxgen -profile klmchannel -outputCreateChannelTx ./channel-artifacts/klmchannel.tx -channelID klmchannel
+ex - ./bin/configtxgen -profile <channel_name> -outputAnchorPeersUpdate ./channel-artifacts/<orgname>MSP_<Channelname>anchors.tx> -channelID <channel_id> -asOrg AudiMSP
+
+    ./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/manufacturerMSP_CV_Channelanchors.tx -channelID hackerthon -asOrg manufacturerMSP
+    ./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/distributorMSP_CV_Channelanchors.tx -channelID hackerthon -asOrg distributorMSP
+./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/retailerMSP_CV_Channelanchors.tx -channelID hackerthon -asOrg retailerMSP
+
+
+
+./bin/configtxgen -profile certificatechannel -outputAnchorPeersUpdate ./channel-artifacts/klmMSP_KLMChannelanchors.tx -channelID certificatechannel -asOrg klmMSP
+    ./bin/configtxgen -profile certificatechannel -outputAnchorPeersUpdate ./channel-artifacts/verifierMSP_KLMChannelanchors.tx -channelID certificatechannel -asOrg verifierMSP
+
+distributorMSP
+
+    https://www.youtube.com/channel/UCQPcJeObmvIgO_3Xgx0Aj1g/videos 
+    

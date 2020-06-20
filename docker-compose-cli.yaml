@@ -1,0 +1,384 @@
+version: '2'
+
+volumes:
+  orderer0.hackerthon.com:
+  orderer1.hackerthon.com:
+  orderer2.hackerthon.com:
+  orderer3.hackerthon.com:
+  orderer4.hackerthon.com:
+  ca.manufacturer.hackerthon.com:
+  ca.distributor.hackerthon.com:
+  ca.retailer.hackerthon.com:
+  peer0.manufacturer.hackerthon.com:
+  peer1.manufacturer.hackerthon.com:
+  peer0.distributor.hackerthon.com:
+  peer1.distributor.hackerthon.com:
+  peer0.retailer.hackerthon.com:
+  peer1.retailer.hackerthon.com:
+  prometheus_data:
+
+networks:
+  cert:
+
+services:
+
+  orderer0.hackerthon.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer0.hackerthon.com
+    container_name: orderer0.hackerthon.com
+    networks:
+      - cert
+
+  orderer1.hackerthon.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer1.hackerthon.com
+    container_name: orderer1.hackerthon.com
+    networks:
+      - cert
+
+  orderer2.hackerthon.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer2.hackerthon.com
+    container_name: orderer2.hackerthon.com
+    networks:
+      - cert
+
+  orderer3.hackerthon.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer3.hackerthon.com
+    container_name: orderer3.hackerthon.com
+    networks:
+      - cert
+
+  orderer4.hackerthon.com:
+    extends:
+      file:   base/docker-compose-base.yaml
+      service: orderer4.hackerthon.com
+    container_name: orderer4.hackerthon.com
+    networks:
+      - cert
+
+  peer0.manufacturer.hackerthon.com:
+    container_name: peer0.manufacturer.hackerthon.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.manufacturer.hackerthon.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=manufacturercouchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on:
+      - manufacturercouchdb0
+    networks:
+      - cert
+
+  manufacturercouchdb0:
+    container_name: manufacturercouchdb0
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 5984:5984
+    networks:
+      - cert
+
+  peer1.manufacturer.hackerthon.com:
+    container_name: peer1.manufacturer.hackerthon.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.manufacturer.hackerthon.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=manufacturercouchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on:
+      - manufacturercouchdb1
+    networks:
+      - cert
+
+  manufacturercouchdb1:
+    container_name: manufacturercouchdb1
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 6984:5984
+    networks:
+      - cert
+
+  peer0.distributor.hackerthon.com:
+    container_name: peer0.distributor.hackerthon.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.distributor.hackerthon.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=distributorcouchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on:
+      - distributorcouchdb0
+    networks:
+      - cert
+
+  distributorcouchdb0:
+    container_name: distributorcouchdb0
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 7984:5984
+    networks:
+      - cert
+
+  peer1.distributor.hackerthon.com:
+    container_name: peer1.distributor.hackerthon.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.distributor.hackerthon.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=distributorcouchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on:
+      - distributorcouchdb1
+    networks:
+      - cert
+
+  distributorcouchdb1:
+    container_name: distributorcouchdb1
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 8984:5984
+    networks:
+      - cert
+
+  peer0.retailer.hackerthon.com:
+    container_name: peer0.retailer.hackerthon.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer0.retailer.hackerthon.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=retailercouchdb0:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on:
+      - retailercouchdb0
+    networks:
+      - cert
+
+  retailercouchdb0:
+    container_name: retailercouchdb0
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 9984:5984
+    networks:
+      - cert
+
+  peer1.retailer.hackerthon.com:
+    container_name: peer1.retailer.hackerthon.com
+    extends:
+      file:  base/docker-compose-base.yaml
+      service: peer1.retailer.hackerthon.com
+    environment:
+      - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=retailercouchdb1:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=
+    depends_on:
+      - retailercouchdb1
+    networks:
+      - cert
+
+  retailercouchdb1:
+    container_name: retailercouchdb1
+    image: hyperledger/fabric-couchdb
+    environment:
+      - COUCHDB_USER=
+      - COUCHDB_PASSWORD=
+    ports:
+      - 10984:5984
+    networks:
+      - cert
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:$IMAGE_TAG
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=$SYS_CHANNEL
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      #- FABRIC_LOGGING_SPEC=DEBUG
+      - FABRIC_LOGGING_SPEC=INFO
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.manufacturer.hackerthon.com:7051
+      - CORE_PEER_LOCALMSPID=manufacturerMSP
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.hackerthon.com/peers/peer0.manufacturer.hackerthon.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.hackerthon.com/peers/peer0.manufacturer.hackerthon.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.hackerthon.com/peers/peer0.manufacturer.hackerthon.com/tls/ca.crt
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/manufacturer.hackerthon.com/users/Admin@manufacturer.hackerthon.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./scripts:/opt/gopath/src/github.com/hyperledger/fabric/peer/scripts
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer0.hackerthon.com
+      - orderer1.hackerthon.com
+      - orderer2.hackerthon.com
+      - orderer3.hackerthon.com
+      - orderer4.hackerthon.com
+      - peer0.manufacturer.hackerthon.com
+      - peer1.manufacturer.hackerthon.com
+      - peer0.distributor.hackerthon.com
+      - peer1.distributor.hackerthon.com
+      - peer0.retailer.hackerthon.com
+      - peer1.retailer.hackerthon.com
+    networks:
+      - cert
+
+  prometheus:
+    image: prom/prometheus:$IMAGE_TAG
+    volumes:
+      - ./prometheus/:/etc/prometheus/
+      - prometheus_data:/prometheus
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--web.console.libraries=/usr/share/prometheus/console_libraries'
+      - '--web.console.templates=/usr/share/prometheus/consoles'
+    ports:
+      - 9090:9090
+    links:
+      - cadvisor:cadvisor
+      - node-exporter:node-exporter
+      - alertmanager:alertmanager
+    depends_on:
+      - cadvisor
+      - node-exporter
+    networks:
+      - cert
+    # restart: always
+
+  node-exporter:
+    image: prom/node-exporter:$IMAGE_TAG
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - --collector.filesystem.ignored-mount-points
+      - "^/(sys|proc|dev|host|etc|rootfs/var/lib/docker/containers|rootfs/var/lib/docker/overlay2|rootfs/run/docker/netns|rootfs/var/lib/docker/aufs)($$|/)"
+    ports:
+      - 9100:9100
+    networks:
+      - cert
+    # restart: always
+
+  alertmanager:
+    image: prom/alertmanager:$IMAGE_TAG
+    ports:
+      - 9093:9093
+    volumes:
+      - ./alertmanager/:/etc/alertmanager/
+    # restart: always
+    command:
+      - '--config.file=/etc/alertmanager/config.yml'
+      - '--storage.path=/alertmanager'
+    networks:
+      - cert
+
+  cadvisor:
+    image: google/cadvisor:$IMAGE_TAG
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    ports:
+      - 8081:8080
+    networks:
+      - cert
+    # restart: always
+
+  ca.manufacturer.hackerthon.com:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-manufacturer
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.manufacturer.hackerthon.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c1f01a9f201e27be58afa2b49bd80c949bb87e9042e76c39bde2640148dcce58_sk
+      - FABRIC_CA_SERVER_PORT=7054
+    ports:
+      - 7054:7054
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.manufacturer.hackerthon.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/c1f01a9f201e27be58afa2b49bd80c949bb87e9042e76c39bde2640148dcce58_sk -b admin:adminpw -d'
+    volumes:
+      - ./fabric-ca-server-config.yaml:/etc/hyperledger/fabric-ca-server/fabric-ca-server-config.yaml
+      - ./crypto-config/peerOrganizations/manufacturer.hackerthon.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_manufacturer
+    networks:
+      - cert
+
+  ca.distributor.hackerthon.com:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-distributor
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.distributor.hackerthon.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/c44ad59a84a0ec6b623d1e28724c3527440ae5ca174d40e7f2b4b86b3308bdd6_sk
+      - FABRIC_CA_SERVER_PORT=8054
+    ports:
+      - 8054:8054
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.distributor.hackerthon.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/c44ad59a84a0ec6b623d1e28724c3527440ae5ca174d40e7f2b4b86b3308bdd6_sk -b admin:adminpw -d'
+    volumes:
+      - ./fabric-ca-server-config.yaml:/etc/hyperledger/fabric-ca-server/fabric-ca-server-config.yaml
+      - ./crypto-config/peerOrganizations/distributor.hackerthon.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_distributor
+    networks:
+      - cert
+
+  ca.retailer.hackerthon.com:
+    image: hyperledger/fabric-ca:$IMAGE_TAG
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca-retailer
+      - FABRIC_CA_SERVER_TLS_ENABLED=true
+      - FABRIC_CA_SERVER_TLS_CERTFILE=/etc/hyperledger/fabric-ca-server-config/ca.retailer.hackerthon.com-cert.pem
+      - FABRIC_CA_SERVER_TLS_KEYFILE=/etc/hyperledger/fabric-ca-server-config/813a4c6ac3b3dd3ec9df6d1458a9cc570409387d4948f164515ea119a1eef6f7_sk
+      - FABRIC_CA_SERVER_PORT=9054
+    ports:
+      - 9054:9054
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.retailer.hackerthon.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/813a4c6ac3b3dd3ec9df6d1458a9cc570409387d4948f164515ea119a1eef6f7_sk -b admin:adminpw -d'
+    volumes:
+      - ./fabric-ca-server-config.yaml:/etc/hyperledger/fabric-ca-server/fabric-ca-server-config.yaml
+      - ./crypto-config/peerOrganizations/retailer.hackerthon.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca_retailer
+    networks:
+      - cert
