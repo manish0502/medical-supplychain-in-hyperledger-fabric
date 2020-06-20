@@ -14,7 +14,7 @@ echo "##########################################################"
 echo "#########  Generating Orderer Genesis block ##############"
 echo "##########################################################"
 set -x
-./bin/configtxgen -profile CertVerificationGenesis -channelID mychannel -outputBlock ./channel-artifacts/genesis.block
+./bin/configtxgen -profile hackerthonGenesis -channelID mychannel -outputBlock ./channel-artifacts/genesis.block
 set +x
 echo
 echo "####################################################################"
@@ -27,21 +27,21 @@ echo "#################################################################"
 echo "#######    Generating anchor peer update for KeralakalamandalamMSP   ##########"
 echo "#################################################################"
 set -x
-./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/Keralakalamandalam_Channelanchors.tx -channelID cvchannel -asOrg KeralakalamandalamMSP
+./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/distributorMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg KeralakalamandalamMSP
 set +x
 echo
 echo "#################################################################"
 echo "#######    Generating anchor peer update for StudentMSP   ##########"
 echo "#################################################################"
 set -x
-./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/Student_Channelanchors.tx -channelID cvchannel -asOrg StudentMSP
+./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/manufacturerMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg StudentMSP
 set +x
 echo
 echo "######################################################################"
 echo "#######    Generating anchor peer update for VerifierMSP   ##########"
 echo "#####################################################################"
 set -x
-./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/Verifier_Channelanchors.tx -channelID cvchannel -asOrg VerifierMSP
+./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/retailerMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg VerifierMSP
 set +x
 echo
 echo "###############################################"
@@ -69,5 +69,4 @@ echo "| |___  | |\  | | |_| | "
 echo "|_____| |_| \_| |____/  "
 echo
 
-cd api && npm install && npm start
 
