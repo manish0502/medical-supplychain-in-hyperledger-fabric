@@ -27,21 +27,21 @@ echo "#################################################################"
 echo "#######    Generating anchor peer update for KeralakalamandalamMSP   ##########"
 echo "#################################################################"
 set -x
-./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/distributorMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg KeralakalamandalamMSP
+./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/distributorMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg distributorMSP
 set +x
 echo
 echo "#################################################################"
 echo "#######    Generating anchor peer update for StudentMSP   ##########"
 echo "#################################################################"
 set -x
-./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/manufacturerMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg StudentMSP
+./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/manufacturerMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg manufacturerMSP
 set +x
 echo
 echo "######################################################################"
 echo "#######    Generating anchor peer update for VerifierMSP   ##########"
 echo "#####################################################################"
 set -x
-./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/retailerMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg VerifierMSP
+./bin/configtxgen -profile CV_Channel -outputAnchorPeersUpdate ./channel-artifacts/retailerMSP_CV_Channelanchors.tx -channelID cvchannel -asOrg retailerMSP
 set +x
 echo
 echo "###############################################"
