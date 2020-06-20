@@ -64,14 +64,14 @@ class Certificate extends Contract {
             }
             let package = JSON.parse(packageAsBytes.toString());
             package.status = "shipment in progress";
-            package.sellerName=sellerName,
-            package.sellerGST=sellerGST,
-            package.buyerName=buyerName,
-            package.buyerGST=buyerGST,
-            package.temperature=temperature,
-            package.humiduty=humiduty,
-            package.transpoterName=transpoterName,
-            package.vehicleNo=vehicleNo
+            package.sellerName=sellerName;
+            package.sellerGST=sellerGST;
+            package.buyerName=buyerName;
+            package.buyerGST=buyerGST;
+            package.temperature=temperature;
+            package.humiduty=humiduty;
+            package.transpoterName=transpoterName;
+            package.vehicleNo=vehicleNo;
             try {
                 await ctx.stub.putState(
                     package.batchNo,
