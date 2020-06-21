@@ -22,7 +22,7 @@ class Drugchain extends Contract {
         transpoterName,
         vehicleNo
     ) {
-        let package = {
+        let packageDetails = {
             batchNo,
             productName,
             productType,
@@ -43,8 +43,8 @@ class Drugchain extends Contract {
         };
         try {
             await ctx.stub.putState(
-                package.batchNo,
-                Buffer.from(JSON.stringify(package))
+                packageDetails.batchNo,
+                Buffer.from(JSON.stringify(packageDetails))
             );
             return(JSON.stringify({response:"The package is created successfully!!!"}));
         } catch (error) {
@@ -55,38 +55,38 @@ class Drugchain extends Contract {
         }
     }
 
-    // async updatePackage(ctx, batchNo, sellerName, sellerGST, buyerName, buyerGST, temperature, humiduty, transpoterName, vehicleNo) {
-    //     try {
-    //         const packageAsBytes = await ctx.stub.getState(batchNo);
-    //         if (!packageAsBytes || packageAsBytes.length === 0) {
-    //             throw new Error(`package with ${batchNo} does not exist`);
-    //         }
-    //         let package = JSON.parse(packageAsBytes.toString());
-    //         package.status = "shipment in progress";
-    //         package.sellerName = sellerName;
-    //         package.sellerGST = sellerGST;
-    //         package.buyerName = buyerName;
-    //         package.buyerGST = buyerGST;
-    //         package.temperature = temperature;
-    //         package.humiduty = humiduty;
-    //         package.transpoterName = transpoterName;
-    //         package.vehicleNo = vehicleNo;
-    //         try {
-    //             await ctx.stub.putState(
-    //                 package.batchNo,
-    //                 Buffer.from(JSON.stringify(package))
-    //             );
-    //             return(JSON.stringify({response:"The package data is updated successfully!!!"}));
-    //         } catch (error) {
-    //             throw new Error(
-    //                 "package data is not updated this the error faced in creating: " +
-    //                     error
-    //             );
-    //         }
-    //     } catch (error) {
-    //         throw new Error(`Some error has occured ${error}`);
-    //     }
-    // }
+    async updatePackage(ctx, batchNo, sellerName, sellerGST, buyerName, buyerGST, temperature, humiduty, transpoterName, vehicleNo) {
+        try {
+            const packageAsBytes = await ctx.stub.getState(batchNo);
+            if (!packageAsBytes || packageAsBytes.length === 0) {
+                throw new Error(`package with ${batchNo} does not exist`);
+            }
+            let packageDetails = JSON.parse(packageAsBytes.toString());
+            packageDetails.status = "shipment in progress";
+            packageDetails.sellerName = sellerName;
+            packageDetails.sellerGST = sellerGST;
+            packageDetails.buyerName = buyerName;
+            packageDetails.buyerGST = buyerGST;
+            packageDetails.temperature = temperature;
+            packageDetails.humiduty = humiduty;
+            packageDetails.transpoterName = transpoterName;
+            packageDetails.vehicleNo = vehicleNo;
+            try {
+                await ctx.stub.putState(
+                    packageDetails.batchNo,
+                    Buffer.from(JSON.stringify(packageDetails))
+                );
+                return(JSON.stringify({response:"The package data is updated successfully!!!"}));
+            } catch (error) {
+                throw new Error(
+                    "package data is not updated this the error faced in creating: " +
+                        error
+                );
+            }
+        } catch (error) {
+            throw new Error(`Some error has occured ${error}`);
+        }
+    }
 
 
     // async viewCertificate(ctx, querystring) {
