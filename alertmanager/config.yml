@@ -2,9 +2,9 @@ global:
   smtp_smarthost: 'smtp.gmail.com:587'
   smtp_from: 'chainlinkspassport@gmail.com'
   smtp_auth_username: 'chainlinkspassport@gmail.com'
-  smtp_auth_password: 'qnvwdfaoktnlxzny'
+  smtp_auth_password: 'wbvhdmgblrpwhtfq'
 
-templates: 
+templates:
 - '/etc/alertmanager/template/*.tmpl'
 
 route:
@@ -12,7 +12,7 @@ route:
 
   group_wait: 30s
   group_interval: 5m
-  repeat_interval: 3h 
+  repeat_interval: 3h
   receiver: team-X-mails
 
   routes:
@@ -26,7 +26,7 @@ route:
 
 # Inhibition rules allow to mute a set of alerts given that another alert is
 # firing.
-# We use this to mute any warning-level notifications if the same alert is 
+# We use this to mute any warning-level notifications if the same alert is
 # already critical.
 inhibit_rules:
 - source_match:
@@ -34,8 +34,8 @@ inhibit_rules:
   target_match:
     severity: 'warning'
   # Apply inhibition if the alertname is the same.
-  # CAUTION: 
-  #   If all label names listed in `equal` are missing 
+  # CAUTION:
+  #   If all label names listed in `equal` are missing
   #   from both the source and target alerts,
   #   the inhibition rule will apply!
   equal: ['alertname', 'cluster', 'service']
@@ -44,4 +44,4 @@ inhibit_rules:
 receivers:
 - name: 'team-X-mails'
   email_configs:
-  - to: 'vishnupradeepmahe@gmail.com'
+  - to: 'vishnu.pradeep@ults.in,midhun.vc@ults.in'

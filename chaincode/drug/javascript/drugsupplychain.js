@@ -124,10 +124,10 @@ class Drugchain extends Contract {
             while(true) {
                 let res = await resultIterator.next();
                 if(res.value && res.value.toString()) {
-                    let package = {};
-                    package.Key = res.value.Key;
-                    package.Record = JSON.parse(res.value.value.toString("utf8"));
-                    packages.push(package);
+                    let packageDetails = {};
+                    packageDetails.Key = res.value.Key;
+                    packageDetails.Record = JSON.parse(res.value.value.toString("utf8"));
+                    packages.push(packageDetails);
                 }
                 if (res.done) {
                     await resultIterator.close();
