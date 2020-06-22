@@ -101,7 +101,7 @@ class Drugchain extends Contract {
                 throw new Error(`package with ${batchNo} does not exist`);
             }
             let packageDetails = JSON.parse(packageAsBytes.toString());
-            packageDetails.status = "shipment in progress";
+            packageDetails.status = "recieved";
             packageDetails.temperature = temperature;
             packageDetails.humiduty = humiduty;
             packageDetails.transpoterName = transpoterName;
