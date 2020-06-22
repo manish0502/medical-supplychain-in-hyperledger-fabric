@@ -1,7 +1,7 @@
 "use strict";
 
 const { Contract } = require("fabric-contract-api");
-
+// const ClientIdentity = require('fabric-shim').ClientIdentity;
 class Drugchain extends Contract {
     async init(ctx){
         console.info("Chaincode Instantiated");
@@ -22,36 +22,42 @@ class Drugchain extends Contract {
         transpoterName,
         vehicleNo
     ) {
-        let packageDetails = {
-            batchNo,
-            productName,
-            productType,
-            quantity,
-            humiduty,
-            temperature,
-            sellerName,
-            sellerGST,
-            buyerName,
-            buyerGST,
-            transpoterName,
-            vehicleNo,
-            owner: "manufacture",
-            paymentDate: new Date().getFullYear(),
-            status: "created",
-            updatedBy: "manufacture",
-            payment: false
-        };
-        try {
-            await ctx.stub.putState(
-                packageDetails.batchNo,
-                Buffer.from(JSON.stringify(packageDetails))
-            );
-            return(JSON.stringify({response:"The package is created successfully!!!"}));
-        } catch (error) {
-            throw new Error(
-                "package is not created this the error faced in creating: " +
-                    error
-            );
+        let owner = ctx.stub.getCreator();
+        if(owner.mspid === "manufacturerMSP"){
+            let packageDetails = {
+                batchNo,
+                productName,
+                productType,
+                quantity,
+                humiduty,
+                temperature,
+                sellerName,
+                sellerGST,
+                buyerName,
+                buyerGST,
+                transpoterName,
+                vehicleNo,
+                owner: "manufacture",
+                paymentDate: new Date().getFullYear(),
+                status: "created",
+                updatedBy: "manufacture",
+                payment: false
+            };
+            try {
+                await ctx.stub.putState(
+                    packageDetails.batchNo,
+                    Buffer.from(JSON.stringify(packageDetails))
+                );
+                return(JSON.stringify({response:"The package is created successfully!!!"}));
+            } catch (error) {
+                throw new Error(
+                    "package is not created this the error faced in creating: " +
+                        error
+                );
+            }
+        }
+        else{
+            throw new Error(`${owner.mspid} is not allowed to create a package`);
         }
     }
 
